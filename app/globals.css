@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  /* 'Jost Variable' / 'Manrope Variable' come from the Fontsource CSS
+     imported in app/layout.js (see the comment there for why we used
+     Fontsource instead of next/font/google in this environment). */
+  --font-jost: "Jost Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-manrope: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --color-sky-deep: #7fa9dc;
+  --color-sky-mid: #a9c9ea;
+  --color-sky-light: #e9f5fc;
+  --color-ink: #12203a;
+  --color-blue: #1a5faa;
+  --color-blue-deep: #0f3f75;
+  --color-muted: #5c6b85;
+  --color-line: #e3ebf5;
+  --color-dark: #0f1f3d;
+}
+
+/* Expose the tokens above (and the next/font CSS variables set on <html>)
+   to Tailwind's utility generator, so classes like font-jost, text-ink,
+   bg-sky-light, border-line etc. become available. */
+@theme inline {
+  --font-jost: var(--font-jost);
+  --font-manrope: var(--font-manrope);
+
+  --color-sky-deep: var(--color-sky-deep);
+  --color-sky-mid: var(--color-sky-mid);
+  --color-sky-light: var(--color-sky-light);
+  --color-ink: var(--color-ink);
+  --color-blue: var(--color-blue);
+  --color-blue-deep: var(--color-blue-deep);
+  --color-muted: var(--color-muted);
+  --color-line: var(--color-line);
+  --color-dark: var(--color-dark);
+}
+
+html,
+body {
+  scroll-behavior: auto; /* Lenis drives smooth scrolling instead of native CSS */
+}
+
+body {
+  background: #fff;
+  color: var(--color-ink);
+  font-family: var(--font-manrope);
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-jost);
+  font-weight: 300;
+}
+
+/* ---- Scroll-reveal primitive ----
+   Elements start hidden/offset; the Reveal component adds
+   `.is-visible` via IntersectionObserver once they enter the viewport. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Floating hero phones ---- */
+@keyframes float-a {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--rot, -14deg));
+  }
+  50% {
+    transform: translateY(-18px) rotate(calc(var(--rot, -14deg) + 4deg));
+  }
+}
+@keyframes float-b {
+  0%,
+  100% {
+    transform: translateY(0) rotate(var(--rot, 9deg));
+  }
+  50% {
+    transform: translateY(-14px) rotate(calc(var(--rot, 9deg) - 4deg));
+  }
+}
